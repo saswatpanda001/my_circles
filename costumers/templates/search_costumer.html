@@ -1,0 +1,49 @@
+{% extends "offnav.html" %}
+
+{% block content %}
+
+
+<h1 class="display-2 mt-5 text-center">Welcome to the Costumer list</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
+{% for each in data_sr %}
+<div class="conatainer ">
+<div class="card  mt-5 mb-3" style="width:280px;">
+  <a href="#">
+  <img src="{{ each.logo.url }}" class="card-img-top">
+  </a>
+  <div class="card-body">
+    
+    <h5 class="diaplay-4 text-dark">{{ each.name }}</h5>
+
+    <a href="{% url 'costumers:update' each.pk%}"><span class="material-icons" style="color:black;">
+      edit
+      </span>
+    <a href="{% url 'costumers:delete' each.pk%}"><span class="material-icons" style="color:black;">
+      delete
+      </span>
+
+      
+    {% if each.mobile != None %}
+    <p class="lead mb-1"><b>Contact no:</b>{{ each.mobile}} </p>
+    {% endif %}
+    {% if each.adress != None %}
+    <p class="lead mb-1"><b>From:</b> {{ each.adress}},{{each.city}},{{each.state}} </p>
+    {% endif %}
+    {% if each.aadhar != None %}
+    <p class="lead mb-1"><b>Aadhar:</b> {{each.aadhar}} </p>
+    {% endif %}
+
+  
+    
+    
+    
+      
+    
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

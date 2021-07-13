@@ -1,0 +1,94 @@
+{% extends "nav_search.html" %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'card.css' %}" />
+
+
+<h1 class="display-2 mt-5 text-center">This is your Product Cart</h1>
+<div class="row">
+<div class="conatiner col-md-7">
+    {% if sum > 0 %}
+<p class="lead mb-0 mt-3" style="font-size: 30px;text-align: center;">Total products in cart: {{num_cart}}</p>
+{% endif %}
+<div class="row row-cols-1 row-cols-md-2 g-4 ml-3">
+{% for each in data %}
+<div class="conatainer ">
+<div class="card  mt-5 mb-3" style="width:280px;">
+  <a href="#">
+  <img src="{{ each.image.url }}" class="card-img-top">
+  </a>
+  <div class="card-body">
+    
+    <h5 class="diaplay-4 text-dark mb-1">{{ each.name }}</h5>
+    
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <p class="lead mt-0 mb-0">Quantity: {{ each.quantity}}</p>
+          <p class="lead mt-0 mb-0">Rs:{{ each.net_price}}</p>
+
+        </div>
+  
+      <div class="col-md-4">
+      
+       
+        <a href="{% url 'products:del_cart' each.pk%}"><span class="material-icons" style="color:black;">
+          delete
+          </span></a>
+      
+      </div>
+      </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+{% if sum > 0 %}
+<div class="conatiner col-md-4 ml-3">
+    <br>
+    <br>
+    <h4 class="display-6" style="text-align: center;">Pricing</h4>
+    <table style="width:100%;font-size: 20px;">
+        <tr>
+          <th>Product Name</th>
+          <th>Num</th>
+          <th>NetPrice</th>
+        </tr>
+    {% for each in data %}
+      <!-- <p class="lead">{{each.name}}  quantity:{{each.quantity}} price:{{each.net_price}}</p> -->
+      
+       
+        <tr>
+          <td>{{each.name}}</td>
+          <td>{{each.quantity}}</td>
+          <td>{{each.net_price}}</td>
+        </tr>
+     
+    {% endfor %}
+</table>
+<h4 class="display-6 mt-5">Total: {{sum}}</h4>
+<div class="d-grid gap-2 mt-4 mb-5">
+    <form method="POST">{% csrf_token %}
+<a href="{% url 'products:confirm' %}"><button class="btn btn-dark" type="submit">Place Order</button></a>
+    </form>
+</div>
+
+
+    </div>
+    
+    </div>
+    
+    {% else %}
+    <div class="container alert alert-danger col-md-6 mt-5" style="padding: 15px;text-align: center;font-size: 23px;"role="alert">
+        There is no item in your cart.....
+    </div>
+    {% endif %}
+
+
+
+{% endblock %}
+

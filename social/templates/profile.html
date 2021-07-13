@@ -1,0 +1,227 @@
+{% extends "nav_search.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'card.css' %}" />
+
+
+<h1 class="display-2 mt-5 text-center">Profile Page</h1>
+</br>
+</br>
+</br>
+</br>
+
+
+<div class="container col-md-8">
+<div class="row">
+
+<div class="container col-md-4 text-center">
+  <img src="{{ details.image.url }}"class="rounded-circle" width="200px">
+  <a href="{% url 'social:profile' details.pk %}"><p class="lead text-dark">@{{ details.user }}</p></a>
+
+</div>
+
+<div class="container col-md-6 ml-2 ">
+  <h5 class="display-5">I am {{details.name}}</h5>
+
+
+
+
+
+<button type="button" class="btn btn-dark mb-4 mr-5" data-bs-toggle="modal" data-bs-target="#following">
+  Following {{ tot_following }}
+</button>
+
+
+<div class="modal fade" id="following" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title lead" id="staticBackdropLabel">Followers</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for each in following %}
+        <a href="{% url 'social:profile' each.pk %}"> <h5 class="text-dark">{{ each }} </h5></a>  <p class="border-bottom">From {{each.userdt_model.city}}, {{each.userdt_model.country}}</p></a>
+        {% endfor %}
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<button type="button" class="btn btn-dark mb-4 ml-0" data-bs-toggle="modal" data-bs-target="#followers">
+  Followers  {{ tot_followers }}
+</button>
+
+
+<div class="modal fade" id="followers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title lead" id="staticBackdropLabel">Followers</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for each in followers %}
+        <a href="{% url 'social:profile' each.pk %}"> <h5 class="text-dark">{{ each }} </h5></a>  <p class="border-bottom">From {{each.userdt_model.city}}, {{each.userdt_model.country}}</p></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+  <p class="lead">{{ details.bio }}</p>
+  <h6>Born on: {{details.date_of_birth}}</h6>
+  <p>From {{details.city}}, {{details.country}}</p>
+  {% if request.user == details.user %}
+  
+  <a href="{% url 'social:profile_update' details.pk %}">
+  <button class="btn btn-dark">Update Profile</button></a>
+
+  {% else %}
+    <form method="POST">{% csrf_token %}
+    {% if is_fol == True %}
+    <button type="submit" class="btn btn-dark">Unfollow</button>
+      
+    {% else %}
+    
+    <button type="submit" class="btn btn-dark">Follow</button>
+      
+    {% endif %}
+  </form>
+  
+    
+    <a href="{% url 'social:text' details.user.pk %}">
+      <button class="btn btn-dark mt-2">Text    <span class="material-icons">
+        sms
+        </span></button></a>
+        
+
+
+    
+ 
+
+  
+  
+
+
+  {% endif %}
+ 
+</div>
+
+</div>
+
+</div>
+</br>
+
+
+
+<div class="container col-md-6">
+<p>
+  <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapse_posts" role="button" aria-expanded="false" aria-controls="collapseExample">
+    MyPosts
+  </a>
+
+  <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapse_products" role="button" aria-expanded="false" aria-controls="collapseExample">
+    MyProducts
+  </a>
+  <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Button with data-bs-target
+  </button> -->
+</p>
+</div>
+<div class="collapse" id="collapse_posts">
+        <h5 class="display-5 text-center">Posts till date</h5>
+
+      <div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
+      {% for each in data %}
+      <div class="conatainer ">
+      <div class="card  mt-5 mb-3" style="width:280px;">
+        <a href="/social/post/{{ each.pk }}">
+        <img src="{{ each.image.url }}" class="card-img-top" alt="..."></a>
+        <div class="card-body">
+          <a href="{% url 'social:profile' details.pk %}"><h5 class="diaplay-4 text-dark">@ {{ each.author }}</h5></a>
+          <h4 class="card-title">{{ each.title}}</h4>
+          <p class="lead">{{each.created}}</p>
+          
+        </div>
+          
+      </div>
+      </div>
+      {% endfor %}
+      </div>
+  
+</div>
+
+
+<div class="collapse" id="collapse_products">
+
+
+
+      <h1 class="display-2 mt-5 text-center">Welcome to the Product list</h1>
+
+      <div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
+      {% for each in pr_data %}
+      <div class="conatainer ">
+      <div class="card  mt-5 mb-3" style="width:280px;">
+        <a href="/products/products/{{each.pk}}">
+        <img src="{{ each.image.url }}" class="card-img-top">
+        </a>
+        <div class="card-body">
+          
+          <h5 class="diaplay-4 text-dark">{{ each.name }}</h5>
+          <!-- <h5 class="diaplay-4 text-dark">By:<a href="/social/profile/{{each.author.id}}" style="color:black">{{ each.author }}</a></h5> -->
+          
+          <div class="row">
+            <div class="col-md-8"><p class="lead">Rs:{{ each.price}}</p></div>
+        
+            <div class="col-md-4">
+            
+              <!-- <a href="{% url 'products:update' each.pk %}"><span class="material-icons" style="color:black;" >
+                edit
+                </span></a>
+              <a href="{% url 'products:delete' each.pk %}"><span class="material-icons" style="color:black;">
+                delete
+                </span></a>
+             -->
+            </div>
+            </div>
+
+
+        
+
+          
+
+          
+          
+        
+        </div>
+      </div>
+      </div>
+      {% endfor %}
+      </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+

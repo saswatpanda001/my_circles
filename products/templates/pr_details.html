@@ -1,0 +1,111 @@
+{% extends "navbar.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+
+<div class="container col-md-8 mt-5 mb-5 text-center">
+    <img src="{{data.image.url}}" class="img-fluid img-responsive"/>
+</div>
+
+
+<h3 class="display-2 mt-5 text-center">{{ data.name }}</h3>
+
+
+<div class="container col-md-7 mt-5">
+  <div class="row">
+  <div class="container col-md-8">
+   
+   <p class="lead">Rs:{{data.price}}</p>
+   <h5>Posted By:<a href="#" style="color:black"><a href="/social/profile/{{data.author.id}}" style="color: black;">{{ data.author }}</a></h5>
+   <p class="lead">Created on:{{ data.created }}</p>
+   {% if request.user == data.author %}
+   <a href="{% url 'products:update' data.pk %}"><span class="material-icons" style="color:black;" >
+                edit
+                </span></a>
+
+               
+              <a href="{% url 'products:delete' data.pk %}"><span class="material-icons" style="color:black;">
+                delete
+                </span></a>
+            
+    {% endif %}
+   </div>
+   <div class="container col-md-4">
+  
+    
+    <p class="lead"><b>Total Reviews:{{len_com}}</b></p>
+    <form method="POST" action="">{% csrf_token %}
+      <div class="">
+        <!-- <label for="quantity" class="form-label">Specify the quantity</label> -->
+        <input type="number" class="form-control" name="quantity" placeholder="Specify the quantity">
+        <button class="btn btn-dark mt-3" type="submit" name="cart_button">Add to cart</button>
+
+      </div>
+    </div>
+</div>
+   <br>
+   <br>
+   <h3 class="display-4" style="text-align: center;">About the product</h3>
+   <p class="lead">{{data.bio}}</p>
+
+
+   <form action="" method="POST">{% csrf_token %}
+       
+    <div class="mb-3 mt-5">
+        <label for="comment" class="form-label">Leave a Comment</label>
+        <textarea class="form-control" name="body" rows="5" placeholder="Feel free to comment"></textarea>
+      </div>
+    <button class="btn btn-dark text-white" type="submit" name="comment_button">Comment</button>
+  </form> 
+ 
+  
+   <a class="d-grid gap-2 mt-5 mb-5">
+      <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#comment">
+        See Comments
+      </button>
+      </a>
+      
+  
+      <div class="modal fade" id="comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Comments</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             
+              {% for each in product_comm %}
+              <p class="mt-0 mb-0">{{each.author}} on {{each.created}}</p>
+              <p text="dark" class="lead mt-0 mb-4">{{ each.body }}</p>
+              
+              {% endfor %}
+            </div>
+           
+          </div>
+        </div>
+      </div>
+  
+
+
+
+
+
+  </div>
+
+
+
+
+  
+ 
+  
+  
+
+
+
+
+{% endblock %}
+
+
+

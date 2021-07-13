@@ -1,0 +1,42 @@
+{% extends "navbar.html" %}
+
+{% block content %}
+
+  
+<h1 class="display-2 mt-5 text-center">Welcome to the blogpost wall</h1>
+<a href="{% url 'learn:create' %}"><p class="conatiner lead ml-5">Add New</p></a>
+
+<div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
+{% for each in data %}
+<div class="conatainer ">
+<div class="card  mt-5 mb-3" style="width:280px;">
+  <a href="{{ data.get_absolute_url }}">
+  <img src="{{ each.image.url }}" class="card-img-top">
+  </a>
+  <div class="card-body">
+    <h5 class="diaplay-4">By: {{ each.author }}</h5>
+    <p class="lead">{{ each.title}}</p>
+
+    <a href="{{ each.get_absolute_url }}">
+    <button class="btn btn-dark" >View</button></a>
+
+    <a href="{% url 'learn:edit' each.pk %}">
+      <button class="btn btn-dark" >Update</button></a>
+
+    <a href="{% url 'learn:delete' each.pk %}">
+      <button class="btn btn-dark" >Delete</button></a>  
+
+  
+   
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+
+

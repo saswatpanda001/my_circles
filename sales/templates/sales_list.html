@@ -1,0 +1,22 @@
+{% extends 'offnav1.html' %}
+
+{% block content %}
+<div>
+<h1 class="lead" style="text-align: center;font-size: 50px;">List of all sales by @{{ request.user }}</h1>
+<div style="margin: 25px;">
+    <ol>
+{% for each in data %}
+<a href="{{each.get_absolute_url}}">
+
+
+<li style="font-size: 20px;color:black;text-decoration: none;">Sale id:{{ each.transaction_id }}  Costumer:{{each.costumer}}</li>
+</a>
+</br>
+
+{% endfor %}
+</ol>
+</div>
+</div>
+
+
+{% endblock %}

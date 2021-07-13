@@ -1,0 +1,32 @@
+{% extends "nav_search.html" %}
+
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'card.css' %}" />
+
+
+<h1 class="display-2 mt-5 text-center">Related Posts</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
+{% for each in data_sr %}
+<div class="conatainer ">
+<div class="card  mt-5 mb-3" style="width:280px;">
+  <a href="{% url 'social:post_detail' each.pk%}">
+  <img src="{{ each.image.url }}" class="card-img-top">
+  </a>
+  <div class="card-body">
+    <h5 class="diaplay-4 text-dark">{{ each.title }}</h5>
+    <p class="lead">By: @{{ each.author }}</p>    
+   
+    
+    
+    
+   
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

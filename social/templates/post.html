@@ -1,0 +1,32 @@
+{% extends "nav_search.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'card.css' %}" />
+
+<h1 class="display-2 mt-5 text-center">Welcome to the blogpost wall</h1>
+
+<div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
+{% for each in data %}
+<div class="conatainer">
+<div class="card  mt-5 mb-3" style="width:280px;">
+  <a href="/social/post/{{ each.pk }}">
+  <img src="{{ each.image.url }}" class="card-img-top img-responsive">
+  </a>
+  <div class="card-body">
+    <a href="/social/profile/{{ each.author.userdt_model.pk }}">
+    <h5 class="diaplay-4 text-dark">@{{ each.author }}</h5></a>
+    <p class="lead">{{ each.title}}</p>
+
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+
+

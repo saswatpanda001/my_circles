@@ -1,0 +1,63 @@
+{% extends 'offnav1.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h3 class="display-4 mt-4 mb=0" style="text-align: center;">Search For your orders</h3>
+
+<div class="container col-md-6 mt-0">
+    </br>
+    </br>
+    
+    <form method="POST">{% csrf_token %}
+        {{ form|crispy }}
+    </br>
+    </br>
+    <div class="text-center"><button type="submit" class="btn btn-dark">Submit</button></div>
+    </form>
+
+    </br>
+    </br>
+
+</div>
+
+
+
+<div class="container">
+    <h3 class="display-4 text-center mb-5">Orders List</h3>
+    {% if ord_table is None %}
+        <div class="container alert alert-danger mt-5 text-center col-md-6" role="alert">
+            No data to display
+        </div>
+       
+    {% else %}
+        <div class="container text-center mb-5">   
+            <table style="width:100%;">
+                <tr>
+                  
+                  <th>Transaction Id</th>
+                  
+                  <th>Salesman</th>
+                  <th>Net_Price</th>
+                  <th>Date</th>
+                </tr>
+            {% for each in ord_table %}
+                  
+                  <td><a href="{% url 'products:ord_details' each.transaction_id%}">{{each.transaction_id}}</a></td>
+                  
+                  <td><a href="{% url 'social:profile' each.salesman.id %}" style="color: black;"><b>{{each.salesman}}</b></a></td>
+                  <td>{{each.net_price}}</td>
+                  <td>{{each.created}}</td>
+                </tr>
+            {% endfor %}
+                
+              </table>
+
+            <br>
+            <br>
+        </div> 
+    {% endif %}
+</div>
+
+
+
+{% endblock %}

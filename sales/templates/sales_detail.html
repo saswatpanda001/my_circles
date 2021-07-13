@@ -1,0 +1,17 @@
+{% extends 'offnav1.html' %}
+
+{% block content %}
+
+<div class="text-center">
+<h1>{{ data.pk }}</h1>   
+</br>
+</br>
+<h1>Transaction_id: {{ data.transaction_id }}</h1>  
+<h1>Total Amount: {{ data.net_price }}</h1>  
+<h1>Salesman: {{ data.salesman }}</h1> 
+
+<h1>Costumer: {{ data.costumer }}</h1> 
+<h1>Created_on: {{ data.created }}</h1>
+
+
+{% endblock %}

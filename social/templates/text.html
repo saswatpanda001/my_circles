@@ -1,0 +1,111 @@
+{% extends "navbar1.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<h2 class="display-3 mt-5 text-center">Sending Text to <a href="{% url 'social:profile' details.reciever.pk %}" style="color:black"> @{{details.reciever}}</a></h2>
+
+
+
+<div class="container col-md-5 mt-5">
+    <form id="text_form">{% csrf_token %}  
+        <input type="hidden" name="send" id="send" value={{details.send}}/>
+        <input type="hidden" name="rec" id="rec" value={{details.rec}}/>
+        <input type="hidden" name="sender" id="sender" value={{details.sender}}/>
+        <input type="hidden" name="reciever" id="reciever" value={{details.reciever}}/>
+        <label for="text">Message</label>
+        <input class="form-control" id="body" type="text" name="body"/>
+        <div class="d-grid gap-2 mt-4" >
+            <button type="submit" class="btn btn-dark">Send</button>
+        </div>   
+    </form>
+</div>
+<br>
+<br>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" 
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+            crossorigin="anonymous"></script>   
+
+            <script type="text/javascript">
+                $(document).on('submit','#text_form',function(e){
+                    e.preventDefault();
+                   
+                    $.ajax({
+                        type:'POST',
+                        url:"{% url 'social:send' details.reciever.pk %}",
+                        data:{
+                            send:$('#send').val(),
+                            rec:$('#rec').val(),
+                            sender:$('#sender').val(),
+                            reciever:$('#reciever').val(),
+                            body:$('#body').val(),
+                            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                        },
+                        })
+                       
+                        });
+                        
+                </script>
+
+                
+                <script>
+                    const user =document.getElementById('user').textContent;
+                    
+                    
+                    $(document).ready(function(){
+                    setInterval(function(){
+                        $.ajax({
+                            type: 'GET',
+                            url : '{% url "social:get_mes" details.reciever.pk %}',
+                            success: function(response){
+            
+                                $("#display").empty();
+                                
+                                
+                                for (var key in response.messages)
+                                {
+                                    
+                                    if (user == response.messages[key].vip){
+                                        var m_data="<div style='color:indigo;background:white;border-radius:20px;text-align:center' class='container darker col-md-6 mr-0'>"+
+                                            "<a style='font-size:23px;'>"+"You"+"</a>"+"___"+ 
+                                            (response.messages[key].date).slice(0,10) +" "+
+                                            (response.messages[key].date).slice(12,19)+
+                                            "<p class='lead'>"+
+                                            response.messages[key].body+"</p></div>";
+                                        
+                                    }
+                                    else{
+                                        var m_data="<div style='color:red;background:white;border-radius:20px;text-align:center' class='container darker col-md-6 ml-0'>"+
+                                            "<a style='font-size:23px;'>"+
+                                                response.messages[key].vip+
+                                                "</a>"+"___"+ 
+                                                (response.messages[key].date).slice(0,10) +" "+
+                                                (response.messages[key].date).slice(12,19)+
+                                                "<p class='lead'>"+response.messages[key].body+
+                                                    "</p></div>";
+                                    }
+                                    
+                                    $("#display").append(m_data);
+                                    
+                                }
+                            },
+                           
+                        });
+                    },1000);
+                    })
+                </script>
+
+
+<div id="display" class="container col-md-7" style="overflow-y: scroll; height:500px;" id="scroll_mes">
+
+   
+</div>
+
+
+{% endblock %}
+
+
+
+

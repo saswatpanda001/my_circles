@@ -1,0 +1,20 @@
+{% extends "offnav1.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h3 class="display-3 text-center mt-5 mb-5">Create a costumer databse</h3>
+
+    <div class="container col-md-5 mt-5">
+    <form method="POST">{% csrf_token %}
+        {{form|crispy}}
+        
+
+
+        <div class="text-center mt-5 mb-5"><button class="btn btn-dark" type="submit">Submit</button>
+    </form>
+    </div>
+
+
+          
+
+
+{% endblock %}
