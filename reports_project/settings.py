@@ -12,14 +12,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ['secret_data']
-#SECRET_KEY = "django-insecure-bhlo$x!k%4rj3lqli(#jc1jt0#tiu(&t6in-+h+g6i6%%fq_oy"
+#SECRET_KEY = os.environ['secret_data']
+SECRET_KEY = "django-insecure-bhlo$x!k%4rj3lqli(#jc1jt0#tiu(&t6in-+h+g6i6%%fq_oy"
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ["mycircles.herokuapp.com", "localhost"]
 
 AUTHENTICATION_BACKENDS = [
@@ -43,18 +43,23 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-
-    'costumers',
-    'products',
-    'profiles',
-    'reports',
-    'sales',
-
+    'widget_tweaks',
+    # 'profiles',
+    # 'learncurd',
+    # 'reports',
+    # 'sales',
     'sc_home',
-    'social',
+    # 'social',
+    # 'costumers',
+    
+    
+    'products',
+    
+
+    
     'crispy_forms',
 
-    'learncurd',
+    
 
     'whitenoise.runserver_nostatic',
 
@@ -116,7 +121,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-
     }
 }
 
@@ -160,11 +164,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 if DEBUG:
-
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 else:
-
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
@@ -180,7 +181,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 LOGIN_URL = "/accounts/login"
-LOGIN_REDIRECT_URL = "/social/post"
+LOGIN_REDIRECT_URL = "/products/products/"
 
 
 ACCOUNT_EMAIL_REQUIRED = True

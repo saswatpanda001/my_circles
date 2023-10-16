@@ -1,3 +1,4 @@
 from django.contrib import admin
+from sc_home.models import feedback_model
 
-# Register your models here.
+admin.site.register(feedback_model)

@@ -3,9 +3,43 @@
 {% load static %}
 {% block content %}
 
+
+
 <link rel="stylesheet" href="{% static 'card.css' %}" />
 
-<h1 class="display-2 mt-5 text-center">My Product list</h1>
+
+<div class="body-popup-modal-area">
+  <span class="modal-close"><img src="assets/img/cancel.png" alt="Close" class="img-fluid"/></span>
+  <div class="modal-container d-flex">
+      <div class="search-box-area">
+          <div class="search-box-form">
+              <form action="#" method="post">
+                  <input type="search" placeholder="type keyword and hit enter"/>
+                  <button class="btn" type="button"><i class="fa fa-search"></i></button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<!--== Search Box Area End ==-->
+
+<!--== Page Title Area Start ==-->
+<div id="page-title-area">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <div class="page-title-content">
+                  <h1>Shop</h1>
+                  <ul class="breadcrumb">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="index.html" class="active">Shop</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
 
 <div class="row row-cols-1 row-cols-md-4 g-4 ml-3">
 {% for each in data %}

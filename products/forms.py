@@ -9,13 +9,11 @@ CHART_CHOICES = (
     ("#3", "LINE CHART")
 )
 
-
 class product_form(forms.ModelForm):
     class Meta():
 
         model = models.Product_Model
         fields = ("name", "image", "price", "bio")
-
 
 class prod_comm(forms.ModelForm):
     class Meta():

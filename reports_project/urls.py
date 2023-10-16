@@ -32,22 +32,22 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
 
-    path('costumer/', include('costumers.urls', namespace="costumers")),
+    # path('costumer/', include('costumers.urls', namespace="costumers")),
 
-    path('sales/', include('sales.urls', namespace="sales")),
+    # path('sales/', include('sales.urls', namespace="sales")),
     path("products/", include("products.urls", namespace="products")),
 
     path('', include('sc_home.urls')),
-    path("social/", include("social.urls", namespace="social")),
+    # path("social/", include("social.urls", namespace="social")),
 
-    path("learn/", include("learncurd.urls", namespace="learn")),
-
+    # path("learn/", include("learncurd.urls", namespace="learn")),
+    
     # path("cart/", include('cart.urls', namespace="cart"))
 
 
 ]
 
-if settings.DEBUG:
+if settings.DEBUG == True:
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL,

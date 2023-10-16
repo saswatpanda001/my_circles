@@ -7,14 +7,14 @@
 
 
     <div class="container col-md-5 mt-5">
-        <form method="POST" enctype="multipart/form-data">{% csrf_token %}  
+
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
             {{ form|crispy }}
             <div class="d-grid gap-2 mt-4 mb-5">
                 <button type="submit" class="btn btn-dark">Submit</button>
-            </div>   
+            </div>               
         </form>
-         
-    
-    
+
     </div>
+
 {% endblock %}
